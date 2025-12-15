@@ -1,1 +1,36 @@
-<p>navbar works!</p>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" routerLink="/">
+      <img src="/Gato2.png" alt="Logo del portfolio" />
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      [attr.aria-expanded]="isMenuOpen"
+      [class.is-active]="isMenuOpen"
+      (click)="toggleMenu()"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div class="navbar-menu" [class.is-active]="isMenuOpen">
+    <div class="navbar-start">
+      <a class="navbar-item" routerLink="/">Home</a>
+      <a class="navbar-item" routerLink="/about">Sobre mí</a>
+      <a class="navbar-item" routerLink="/">Proyectos</a>
+      <a class="navbar-item" routerLink="/">Contacto</a>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary">Log in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
