@@ -5,7 +5,8 @@
         <h1 class="title has-text-centered">Iniciar sesión</h1>
 
         <div class="box">
-          <form>
+          <form (ngSubmit)="onLogin()">
+
             <!-- Email -->
             <div class="field">
               <label class="label">Email</label>
@@ -14,6 +15,8 @@
                   class="input"
                   type="email"
                   placeholder="tu@email.com"
+                  [(ngModel)]="userName"
+                  name="email"
                 />
               </div>
             </div>
@@ -26,15 +29,27 @@
                   class="input"
                   type="password"
                   placeholder="********"
+                  [(ngModel)]="password"
+                  name="password"
                 />
               </div>
             </div>
 
+            <!-- Error -->
+            <p class="help is-danger mb-3" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </p>
+
             <div class="field">
-              <button class="button is-primary is-fullwidth">
-                Ingresar
+              <button
+                class="button is-primary is-fullwidth"
+                type="submit"
+                [disabled]="isLoading"
+              >
+                {{ isLoading ? 'Ingresando...' : 'Ingresar' }}
               </button>
             </div>
+
           </form>
         </div>
 
@@ -42,4 +57,3 @@
     </div>
   </div>
 </section>
-
