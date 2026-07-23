@@ -1,79 +1,140 @@
 <section class="section">
   <div class="container">
-    <h1 class="title has-text-centered">Contacto</h1>
-    <p class="subtitle has-text-centered">
-      ¿Querés ponerte en contacto conmigo? Completá el formulario
-    </p>
+
+    <div class="has-text-centered mb-6">
+      <h1 class="title is-2">Contacto</h1>
+      <p class="subtitle is-5">
+        ¿Tenés una propuesta, proyecto o consulta?
+        Podés escribirme directamente desde acá.
+      </p>
+    </div>
 
     <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="box">
-          <form>
+      <div class="column is-8-desktop is-10-tablet">
+
+        <div class="box p-6">
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
             <!-- Nombre -->
             <div class="field">
-              <label class="label">Nombre</label>
+              <label class="label">Nombre *</label>
               <div class="control">
                 <input
                   class="input"
                   type="text"
+                  formControlName="senderName"
                   placeholder="Tu nombre"
+                  maxlength="50"
+                  autocomplete="name"
                 />
               </div>
+              <p class="help">Máximo 50 caracteres</p>
+            </div>
+
+            <!-- Empresa -->
+            <div class="field">
+              <label class="label">
+                Empresa <span class="has-text-grey">(opcional)</span>
+              </label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  formControlName="company"
+                  placeholder="Empresa o compañía"
+                  maxlength="50"
+                  autocomplete="organization"
+                />
+              </div>
+              <p class="help">Máximo 50 caracteres</p>
             </div>
 
             <!-- Email -->
             <div class="field">
-              <label class="label">Email</label>
+              <label class="label">Email *</label>
               <div class="control">
                 <input
                   class="input"
                   type="email"
+                  formControlName="senderEmail"
                   placeholder="tu@email.com"
+                  maxlength="150"
+                  autocomplete="email"
+                  spellcheck="false"
                 />
               </div>
+              <p class="help">Ingresá un email válido</p>
+            </div>
+
+            <!-- Asunto -->
+            <div class="field">
+              <label class="label">Asunto *</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  formControlName="subject"
+                  placeholder="Asunto del mensaje"
+                  maxlength="150"
+                />
+              </div>
+              <p class="help">Máximo 150 caracteres</p>
             </div>
 
             <!-- Mensaje -->
             <div class="field">
-              <label class="label">Mensaje</label>
+              <label class="label">Mensaje *</label>
               <div class="control">
                 <textarea
                   class="textarea"
-                  placeholder="Escribí tu mensaje"
+                  formControlName="messageBody"
+                  rows="7"
+                  maxlength="3000"
+                  placeholder="Escribí tu mensaje..."
                 ></textarea>
               </div>
+              <p class="help">Máximo 3000 caracteres</p>
             </div>
 
             <!-- Botón -->
-            <div class="field has-text-centered">
+            <div class="field mt-5">
               <div class="control">
-                <button class="button is-primary is-medium">
-                  Enviar mensaje
+                <button
+                  class="button is-primary is-fullwidth is-medium"
+                  type="submit"
+                  [disabled]="sending"
+                >
+                  {{ sending ? 'Enviando...' : 'Enviar mensaje' }}
                 </button>
               </div>
             </div>
+
+            <p class="has-text-success mt-3" *ngIf="sent">
+              ¡Mensaje enviado correctamente!
+            </p>
+            <p class="has-text-danger mt-3" *ngIf="errorMsg">
+              {{ errorMsg }}
+            </p>
+
           </form>
         </div>
 
-        <!-- Info extra -->
-        <div class="content has-text-centered mt-5">
-          <p>
-            También podés encontrarme en:
-          </p>
-
+        <!-- Links (sin cambios) -->
+        <div class="content has-text-centered mt-6">
+          <p class="mb-4">También podés encontrarme en:</p>
           <div class="buttons is-centered">
-            <a class="button is-link is-light" href="https://www.linkedin.com/in/nahuel-cuello/" target="_blank">
-              LinkedIn
-            </a>
-            <a class="button is-dark is-light" href="https://github.com/nahdaicue" target="_blank">
-              GitHub
-            </a>
-            <a class="button is-info is-light" href="mailto:tu@email.com">
-              Email
-            </a>
+            <a class="button is-link is-light" href="https://www.linkedin.com/in/nahuel-cuello/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="button is-dark" href="https://github.com/nahdaicue" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="button is-info is-light" href="mailto:tu@email.com">Email</a>
           </div>
+          <p class="is-size-7 has-text-grey mt-5">
+            Tu información será utilizada únicamente para responder tu consulta.
+          </p>
         </div>
+
       </div>
     </div>
+
   </div>
 </section>
