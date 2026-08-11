@@ -3,12 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { PortfolioModel } from '../models/portfolio-model';
+import { ProfileUpdateModel } from '../models/profile-update-model';
+import { ProfileModel } from '../models/profile-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PortfolioService {
-
   private readonly API_URL = 'http://localhost:8080';
   private http = inject(HttpClient);
 
@@ -20,8 +21,22 @@ export class PortfolioService {
       return this.portfolio$ as Observable<PortfolioModel>;
     }
 
-    return this.http.get<PortfolioModel>(`${this.API_URL}/api/portfolio`).pipe(
-      tap(data => this.portfolioSubject.next(data))
+    return this.http
+      .get<PortfolioModel>(`${this.API_URL}/api/portfolio`)
+      .pipe(tap((data) => this.portfolioSubject.next(data)));
+  }
+
+  updateProfile(
+    userId: number,
+    dto: ProfileUpdateModel,
+  ): Observable<ProfileModel> {
+    return this.http.put<ProfileModel>(
+      `${this.API_URL}/api/profile/${userId}`,
+      dto,
     );
+  }
+
+  clearCache(): void {
+    this.portfolioSubject.next(null);
   }
 }

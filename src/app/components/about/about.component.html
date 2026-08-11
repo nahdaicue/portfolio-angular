@@ -13,8 +13,15 @@
     <div class="container">
       <h1 class="title has-text-centered">Sobre mí</h1>
       <p class="subtitle has-text-centered">
-        {{ portfolio!.profile.name }} - {{ portfolio!.profile.title }}
-      </p>
+  {{ portfolio!.profile.username }} - {{ portfolio!.profile.title }}
+</p>
+
+      <!-- Btn edit -->
+      <div class="has-text-right mb-4" *ngIf="loggedIn$ | async">
+        <a class="button is-warning" routerLink="/edit-perfil">
+          ✏️ Editar perfil
+        </a>
+      </div>
 
       <div class="columns is-vcentered">
         <!-- Columna izquierda: imagen -->

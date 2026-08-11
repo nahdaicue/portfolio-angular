@@ -1,0 +1,179 @@
+<div *ngIf="isLoading" class="has-text-centered mt-6">
+  <p class="has-text-grey">⏳ Cargando perfil...</p>
+</div>
+
+<div *ngIf="error && isLoading" class="has-text-centered mt-6">
+  <p class="has-text-danger">⚠️ {{ error }}</p>
+</div>
+
+<ng-container *ngIf="!isLoading && portfolio">
+  <section class="section">
+    <div class="container" style="max-width: 960px">
+      <h1 class="title has-text-centered">Editar perfil</h1>
+      <p class="subtitle has-text-centered">
+        {{ portfolio.profile.username }} — {{ portfolio.profile.title }}
+      </p>
+
+      <div
+        *ngIf="successMsg"
+        class="notification is-success is-light has-text-centered"
+      >
+        {{ successMsg }}
+      </div>
+
+      <div
+        *ngIf="error && !isLoading"
+        class="notification is-danger is-light has-text-centered"
+      >
+        {{ error }}
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="columns">
+          <div class="column is-5">
+            <div class="field">
+              <label class="label">Nombre completo</label>
+              <div class="control">
+                <input
+                  class="input"
+                  [class.is-danger]="
+                    f['username'].invalid && f['username'].touched
+                  "
+                  type="text"
+                  formControlName="username"
+                  placeholder="Ej: Juan Pérez"
+                />
+              </div>
+              <p
+                *ngIf="f['username'].invalid && f['username'].touched"
+                class="help is-danger"
+              >
+                Obligatorio. Entre 2 y 80 caracteres.
+              </p>
+            </div>
+
+            <div class="field">
+              <label class="label">Título profesional</label>
+              <div class="control">
+                <input
+                  class="input"
+                  [class.is-danger]="f['title'].invalid && f['title'].touched"
+                  type="text"
+                  formControlName="title"
+                  placeholder="Ej: Full Stack Developer"
+                />
+              </div>
+              <p
+                *ngIf="f['title'].invalid && f['title'].touched"
+                class="help is-danger"
+              >
+                Obligatorio. Entre 2 y 120 caracteres.
+              </p>
+            </div>
+
+            <div class="field">
+              <label class="label">URL de foto de perfil</label>
+              <div class="control">
+                <input
+                  class="input"
+                  [class.is-danger]="f['urlImg'].invalid && f['urlImg'].touched"
+                  type="text"
+                  formControlName="urlImg"
+                  placeholder="https://..."
+                />
+              </div>
+              <p
+                *ngIf="f['urlImg'].invalid && f['urlImg'].touched"
+                class="help is-danger"
+              >
+                Ingresá una URL válida (http:// o https://).
+              </p>
+            </div>
+
+            <div class="field has-text-centered mt-5">
+              <figure class="image is-256x256 is-inline-block">
+                <img
+                  class="is-rounded"
+                  [src]="f['urlImg'].value"
+                  alt="Vista previa"
+                  onerror="
+                    this.src =
+                      'https://bulma.io/images/placeholders/256x256.png'
+                  "
+                />
+              </figure>
+              <p class="help has-text-grey mt-2">Vista previa</p>
+            </div>
+          </div>
+
+          <div class="column is-7">
+            <div class="field">
+              <label class="label">Descripción corta</label>
+              <div class="control">
+                <textarea
+                  class="textarea"
+                  [class.is-danger]="
+                    f['description'].invalid && f['description'].touched
+                  "
+                  formControlName="description"
+                  rows="3"
+                  placeholder="Breve descripción para el subtítulo..."
+                ></textarea>
+              </div>
+              <p
+                *ngIf="f['description'].invalid && f['description'].touched"
+                class="help is-danger"
+              >
+                Mínimo 10, máximo 500 caracteres.
+              </p>
+            </div>
+
+            <div class="field">
+              <label class="label">Sobre mí</label>
+              <div class="control">
+                <textarea
+                  class="textarea"
+                  [class.is-danger]="
+                    f['aboutMe'].invalid && f['aboutMe'].touched
+                  "
+                  formControlName="aboutMe"
+                  rows="8"
+                  placeholder="Contá tu historia, experiencia, tecnologías que dominás..."
+                ></textarea>
+              </div>
+              <p
+                *ngIf="f['aboutMe'].invalid && f['aboutMe'].touched"
+                class="help is-danger"
+              >
+                Mínimo 20, máximo 2000 caracteres.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-centered mt-5">
+          <div class="control">
+            <button
+              type="submit"
+              class="button is-primary"
+              [class.is-loading]="isSaving"
+              [disabled]="isSaving"
+            >
+              💾 Guardar cambios
+            </button>
+          </div>
+          <div class="control">
+            <button
+              type="button"
+              class="button is-light"
+              (click)="onCancel()"
+              [disabled]="isSaving"
+            >
+              ❌ Cancelar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</ng-container>

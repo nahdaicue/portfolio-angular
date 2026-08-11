@@ -1,6 +1,6 @@
 export interface ProfileModel {
   id: number;
-  name: string;
+  username: string;
   title: string;
   description: string;
   aboutMe: string;
